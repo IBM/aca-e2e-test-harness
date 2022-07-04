@@ -1,0 +1,14 @@
+build
+jwt_key
+/async-e2e.log
+/sync-e2e.log
+/genesys-e2e.log
+/wva-e2e.log
+node_modules
+test_reports/
+nvm/
+.directory
+.env
+*.env
+.DS_Store
+jmeter.log

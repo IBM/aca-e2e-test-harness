@@ -1,0 +1,11 @@
+**/node_modules/**
+# Ignore build result files
+tests/build/**
+**/coverage/**
+nvm/*
+types/**
+flow-typed/**
+bin/
+docs
+temp
+lib/suites/**

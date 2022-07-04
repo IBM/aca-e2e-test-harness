@@ -1,0 +1,3 @@
+**/__mocks__/**
+lib/v1/__tests__/**
+yarn.lock

@@ -1,0 +1,161 @@
+{
+  "name": "aca-test-e2e-harness",
+  "version": "2.1.0",
+  "description": "Advanced Conversational Asset e2e test harness library",
+  "author": "IBM",
+  "license": "MIT",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "generate-jwt": "node bin/generate-jwt.js",
+    "test:e2e": "node bin/aca-e2e-test-runner.js e2e-all -p tests/e2e/test-cases -g --headless --ci",
+    "test:e2e:sync": "node bin/aca-e2e-test-runner.js e2e-liveperson-sync -p tests/e2e/test-cases -g --ci",
+    "test:e2e:sync-chrome": "node bin/aca-e2e-test-runner.js e2e-liveperson-sync-chrome -p tests/e2e/test-cases -g --ci",
+    "test:e2e:async": "node bin/aca-e2e-test-runner.js e2e-liveperson-async -p tests/e2e/test-cases --ci",
+    "test:e2e:socketio": "node bin/aca-e2e-test-runner.js e2e-socket-io -p tests/e2e/test-cases --ci",
+    "test:e2e:ui-backend": "node bin/aca-e2e-test-runner.js e2e-ui-backend -p tests/e2e/test-cases --ci",
+    "test:e2e:nuance": "node bin/aca-e2e-test-runner.js e2e-nuance -p tests/e2e/test-cases --ci",
+    "test:e2e:chat-api": "node bin/aca-e2e-test-runner.js e2e-bot-chat-api -p tests/e2e/test-cases --ci",
+    "test:e2e:imi": "node bin/aca-e2e-test-runner.js e2e-imi -p tests/e2e/test-cases --ci",
+    "test:e2e:genesys": "node bin/aca-e2e-test-runner.js e2e-genesys -p tests/e2e/test-cases --ci",
+    "test:wva:training": "node bin/aca-e2e-test-runner.js e2e-wva -p tests/e2e/test-cases --ci",
+    "lint": "eslint . --cache",
+    "lint:fix": "eslint --fix .",
+    "clean": "rimraf node_modules tests/node_modules test_reports coverage nvm packages/**/node_modules packages/**/build",
+    "precommit": "lint-staged",
+    "prepush": "lint-staged && yarn lint:fix",
+    "prepare": "husky install",
+    "commitmsg": "validate-commit-msg",
+    "commit": "git-cz",
+    "release:patch": "yarn version --patch && git push --follow-tags",
+    "release:minor": "yarn version --minor && git push --follow-tags",
+    "release:major": "yarn version --major && git push --follow-tags"
+  },
+  "dependencies": {
+    "atob": "^2.1.2",
+    "bluebird": "^3.5.4",
+    "bottleneck": "^2.18.1",
+    "commander": "^2.20.0",
+    "dotenv": "^8.0.0",
+    "events": "^3.0.0",
+    "jest": "^24.8.0",
+    "jest-cli": "^24.9.0",
+    "jest-diff": "^24.8.0",
+    "jest-junit": "^6.4.0",
+    "joi": "^17.3.0",
+    "js-yaml": "^3.14.0",
+    "jsonwebtoken": "^8.5.1",
+    "parse-numeric-range": "^0.0.2",
+    "puppeteer": "^2.1.1",
+    "ramda": "^0.26.1",
+    "request-promise": "^4.2.4",
+    "socket.io-client": "^2.2.0",
+    "tree-kill": "^1.2.2",
+    "winston": "^2.3.1",
+    "ws": "^7.0.0",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^2.1.0",
+    "dotenv": "^8.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-defaults": "^9.0.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jest": "^22.5.1",
+    "eslint-plugin-jest-async": "^1.0.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-security": "^1.4.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^8.1.7",
+    "node-gyp": "^4.0.0",
+    "prettier": "^1.17.1",
+    "sonar-scanner": "^3.1.0",
+    "standard-changelog": "^2.0.11",
+    "supertest": "^4.0.2",
+    "validate-commit-msg": "^2.14.0"
+  },
+  "engines": {
+    "node": "16.x",
+    "yarn": "1.x"
+  },
+  "workspaces": [
+    "lib/*",
+    "tests/*"
+  ],
+  "config": {
+    "validate-commit-msg": {
+      "types": [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "build",
+        "ci",
+        "chore",
+        "revert"
+      ],
+      "scope": {
+        "required": false,
+        "allowed": [
+          "*"
+        ],
+        "validate": false,
+        "multiple": false
+      },
+      "warnOnFail": false,
+      "maxSubjectLength": 100,
+      "subjectPattern": ".+",
+      "subjectPatternErrorMsg": "subject does not match subject pattern!",
+      "helpMessage": "The commit message does not match the conventional-commit format. Use 'yarn commit' or see https://github.com/conventional-changelog/conventional-changelog/blob/v0.5.3/conventions/angular.md",
+      "autoFix": false
+    },
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "automock": false,
+    "unmockedModulePathPatterns": [
+      "bluebird",
+      "ramda",
+      "async",
+      "fixtures/.*"
+    ],
+    "projects": [
+      "<rootDir>"
+    ],
+    "testResultsProcessor": "./node_modules/jest-junit",
+    "testPathIgnorePatterns": [
+      "<rootDir>/packages/.*/node_modules/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/.*/__tests__/fixtures/.*",
+      "<rootDir>/fixtures/",
+      "<rootDir>/.*coverage",
+      "<rootDir>/.*target",
+      "<rootDir>/.*build",
+      "<rootDir>/tests",
+      "<rootDir>/.history"
+    ],
+    "collectCoverage": true
+  },
+  "lint-staged": {
+    "*.js": [
+      "yarn lint:fix",
+      "git add"
+    ]
+  },
+  "jest-junit": {
+    "suiteName": "Unit tests",
+    "output": "./test_reports/junit.xml",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "usePathForSuiteName": "true"
+  }
+}
