@@ -1,0 +1,11 @@
+---
+test-cases:
+  - name: 1 - basic flow (conversation reply)
+    typing: true
+    script:
+      - human: hi
+      - bot: Hello! My name is
+        partial: true
+      - bot: Shall we proceed?
+      - human: ok
+      - bot: This question is irrelevant
